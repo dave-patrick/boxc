@@ -1,0 +1,66 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Rounded, softly raised buttons. The blur lives on a separate shadow layer so the label stays crisp;
+         pressing moves the face down by changing its margin (whole pixels), not with a transform. -->
+    <ControlTemplate x:Key="RaisedButtonTemplate" TargetType="Button">
+        <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+            <Border x:Name="Shadow" CornerRadius="8" Background="#000000" Opacity="0.55" Margin="1,3,1,0" IsHitTestVisible="False">
+                <Border.Effect><BlurEffect Radius="4"/></Border.Effect>
+            </Border>
+            <Border x:Name="Face" CornerRadius="8" BorderThickness="1" Margin="0,0,0,3"
+                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                <Grid>
+                    <Border CornerRadius="7,7,0,0" Height="12" VerticalAlignment="Top" Margin="1,1,1,0" IsHitTestVisible="False">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#33FFFFFF" Offset="0"/>
+                                <GradientStop Color="#00FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Border x:Name="Hover" CornerRadius="7" Background="#18FFFFFF" Opacity="0" IsHitTestVisible="False"/>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Hover" Property="Opacity" Value="1"/></Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Face" Property="Margin" Value="0,2,0,1"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Template" Value="{StaticResource RaisedButtonTemplate}"/>
+        <Setter Property="Foreground" Value="#ffffff"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="BorderBrush" Value="#2a6a97"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#52a8dc" Offset="0"/>
+                    <GradientStop Color="#2f7bad" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="Template" Value="{StaticResource RaisedButtonTemplate}"/>
+        <Setter Property="Foreground" Value="#c4c9d1"/>
+        <Setter Property="BorderBrush" Value="#3a3f47"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2f343b" Offset="0"/>
+                    <GradientStop Color="#1f2227" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
